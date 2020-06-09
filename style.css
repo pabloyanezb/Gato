@@ -1,0 +1,78 @@
+.background {
+    background: linear-gradient(-45deg, #053863, #379683, #5CDB95);
+    height: 668px;
+}
+nav {
+    background-color: #053863;
+}
+.btn-outline-success {
+    color: #5CDB95;
+    border-color: #5CDB95;
+}
+.container>.row {
+    margin-top: 1rem;
+}
+.jumbotron {
+    background-color: #EDF5E1;
+    padding: 10px;
+}
+.tablero {
+    border-radius: 10px;    
+    background-color:#379683;
+    padding: 20px;
+}
+.celda {
+    height: 150px;
+    background-color: #8EE4AF;
+    border-radius: 5px;
+    font-size: 6rem;
+    font-weight: bold;
+    text-align: center;
+    color: #EDF5E1;
+}
+.celda:hover {
+    background-color: #5CDB95;
+}
+.row>.col-4{
+    padding:10px;
+}
+.siguiente {
+    font-size: 40px;
+    font-weight: bolder;
+    color: rgb(155, 155, 155);
+    text-align: center;
+    color: #053863;
+}
+.celda.ganadora {
+    background: rgb(255,241,81);
+    background: radial-gradient(circle, rgba(255,241,81,1) 0%, rgba(171,141,79,1) 100%);
+}
+.tabla {
+    padding: 0;
+}
+.table {
+    margin: 0;
+}
+tr {
+    text-align: center;
+}
+.modal-header {
+    background-color: #5CDB95;
+}
+/* Estilo botón de iniciar (btn-outline-success) */
+.btn-outline-success:not(:disabled):not(.disabled).active:focus, .btn-outline-success:not(:disabled):not(.disabled):active:focus, .show>.btn-outline-success.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(92, 219, 149, 0.246);
+}
+.btn-outline-success:focus {
+    box-shadow: 0 0 0 0.2rem rgba(92, 219, 149, 0.253);
+}
+.btn-outline-success:not(:disabled):not(.disabled).active, .btn-outline-success:not(:disabled):not(.disabled):active, .show>.btn-outline-success.dropdown-toggle {
+    color: #EDF5E1;
+    background-color: #5CDB95;
+    border-color: #5CDB95;
+}
+.btn-outline-success:hover {
+    color: #EDF5E1;
+    background-color: #5CDB95;
+    border-color: #5CDB95;
+}
