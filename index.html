@@ -83,6 +83,7 @@
                               </tr>
                             </tbody>
                           </table>
+                          <button type="button" class="clear btn btn-outline-success btn-block" data-dismiss="modal">Borrar puntajes</button>
                         </div>
                       </div>
                   </div>
@@ -109,115 +110,149 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script>
-        // Acá va nuestro código
+
       var hay_ganador = false;
-      var puntaje_O = 0;
-      var puntaje_X = 0;
+      
+      function traer_valores() {
+        var valores = [];
+        // recorrer las celdas trayendome el valor de cada una
+        $('.celda').each(function() {
 
-        function traer_valores() {
-          var valores = [];
-          // recorrer las celdas trayendome el valor de cada una
-          $('.celda').each(function() {
+          var valor_celda = $(this).html();
+          valores.push(valor_celda);
 
-            var valor_celda = $(this).html();
-            valores.push(valor_celda);
-
-          });
-          return valores;
-        }
-        function ganar_O(num1, num2, num3) {
-          var valores = traer_valores();
-          if (valores[num1] == 'O' && valores[num2] == 'O' && valores[num3] == 'O'){
-          $('#modal-ganador').modal('show');
-          $(".celda:eq(" + num1 + "), .celda:eq(" + num2 + "), .celda:eq(" + num3 + ")").addClass('ganadora');
-          hay_ganador = true;
-          $('.modal-body>span').html('O');
-          }
-        }
-        function ganar_X(num1, num2, num3) {
-          var valores = traer_valores();
-          if (valores[num1] == 'X' && valores[num2] == 'X' && valores[num3] == 'X'){
-          $('#modal-ganador').modal('show');
-          $(".celda:eq(" + num1 + "), .celda:eq(" + num2 + "), .celda:eq(" + num3 + ")").addClass('ganadora');
-          hay_ganador = true;
-          $('.modal-body>span').html('X');
-          }
-        }
-
-        $('.celda').on('click', function() {
-          //chequeo que todavia nadie haya ganado
-          if (hay_ganador) {
-            return;
-          }
-
-          // verificar que la celda no este ocupada
-          var contenido_celda = $(this).html();
-          if (contenido_celda != '') {
-            return;
-          }
-          // ver a que jugador le toca
-          var siguiente = $('.siguiente').html();
-          // jugar
-          $(this).html(siguiente);
-          // cambiar el valor del jugador siguiente
-          if (siguiente == 'O'){
-            $('.siguiente').html('X');
-          } else {
-            $('.siguiente').html('O');
-          }
-
-          // verificar si gana el jugador O
-
-          ganar_O('0', '1', '2'); // fila 1
-          ganar_O('3', '4', '5'); // fila 2
-          ganar_O('6', '7', '8'); // fila 3
-          ganar_O('0', '3', '6'); // columna 1
-          ganar_O('1', '4', '7'); // columna 2
-          ganar_O('2', '5', '8'); // columna 3
-          ganar_O('0', '4', '8'); // diagonal descendiente
-          ganar_O('2', '4', '6'); // diagonal ascendiente
-
-          // verificar si gana el jugador X
-
-          ganar_X('0', '1', '2'); // fila 1
-          ganar_X('3', '4', '5'); // fila 2
-          ganar_X('6', '7', '8'); // fila 3
-          ganar_X('0', '3', '6'); // columna 1
-          ganar_X('1', '4', '7'); // columna 2
-          ganar_X('2', '5', '8'); // columna 3
-          ganar_X('0', '4', '8'); // diagonal descendiente
-          ganar_X('2', '4', '6'); // diagonal ascendiente
         });
+        return valores;
+      }
+
+      function ganar_O(num1, num2, num3) {
+        var valores = traer_valores();
+        // verifica si son O
+        if (valores[num1] == 'O' && valores[num2] == 'O' && valores[num3] == 'O'){
+          // agrega clase ganadora, si se cumplen los 3 en linea
+          $(".celda:eq(" + num1 + "), .celda:eq(" + num2 + "), .celda:eq(" + num3 + ")").addClass('ganadora');
+          hay_ganador = true;
+          $('#modal-ganador').modal('show');
+          $('.modal-body>span').html('O');
+        }
+      }
+      function ganar_X(num1, num2, num3) {
+        var valores = traer_valores();
+        // verifica si son X
+        if (valores[num1] == 'X' && valores[num2] == 'X' && valores[num3] == 'X'){
+          // agrega clase ganadora, si se cumplen los 3 en linea
+          $(".celda:eq(" + num1 + "), .celda:eq(" + num2 + "), .celda:eq(" + num3 + ")").addClass('ganadora');
+          hay_ganador = true;
+          $('#modal-ganador').modal('show');
+          $('.modal-body>span').html('X');
+        }
+      }
+
+      $('.celda').on('click', function() {
+        //chequeo que todavia nadie haya ganado
+        if (hay_ganador) {
+          return;
+        }
+
+        // verificar que la celda no este ocupada
+        var contenido_celda = $(this).html();
+        if (contenido_celda != '') {
+          return;
+        }
+        // ver a que jugador le toca
+        var siguiente = $('.siguiente').html();
+        // jugar
+        $(this).html(siguiente);
+        // cambiar el valor del jugador siguiente
+        if (siguiente == 'O'){
+          $('.siguiente').html('X');
+        } else {
+          $('.siguiente').html('O');
+        }
+
+        // verificar si gana el jugador O
+
+        ganar_O('0', '1', '2'); // fila 1
+        ganar_O('3', '4', '5'); // fila 2
+        ganar_O('6', '7', '8'); // fila 3
+        ganar_O('0', '3', '6'); // columna 1
+        ganar_O('1', '4', '7'); // columna 2
+        ganar_O('2', '5', '8'); // columna 3
+        ganar_O('0', '4', '8'); // diagonal descendiente
+        ganar_O('2', '4', '6'); // diagonal ascendiente
+
+        // verificar si gana el jugador X
+
+        ganar_X('0', '1', '2'); // fila 1
+        ganar_X('3', '4', '5'); // fila 2
+        ganar_X('6', '7', '8'); // fila 3
+        ganar_X('0', '3', '6'); // columna 1
+        ganar_X('1', '4', '7'); // columna 2
+        ganar_X('2', '5', '8'); // columna 3
+        ganar_X('0', '4', '8'); // diagonal descendiente
+        ganar_X('2', '4', '6'); // diagonal ascendiente
+
+      });
+
       function reiniciar () {
+        $('.celda').html(''); // limpia las celdas
+        $('.celda').removeClass('ganadora'); // remueve la clase ganadora, vuelve al color original
+        hay_ganador = false;
+      }
+      function sumar_puntajes () {
         var invalido = false;
         var siguiente = $('.siguiente').html();
+        // comprueba si el juego aun no se gana
         $('.celda').each(function() {
-          if ($(this).text().length == 0 && !hay_ganador){
+          if ($(this).text().length == 0 && !hay_ganador){ 
             invalido = true;
           }
         });
-        if (invalido){ // aun no se llega a emptate o victoria
+        if (invalido){ 
           return; // no es posible reiniciar
         } else if (siguiente == 'O' && hay_ganador){ // gana X
           puntaje_X += 10;
           $('.puntaje-x').html(puntaje_X);
+          localStorage.setItem('parcial_x', puntaje_X);
         } else if (siguiente == 'X' && hay_ganador){ // gana O
           puntaje_O += 10;
           $('.puntaje-o').html(puntaje_O);
+          localStorage.setItem('parcial_o', puntaje_O);
         } else { // empate
           puntaje_X += 5;
           puntaje_O += 5;
           $('.puntaje-x').html(puntaje_X);
           $('.puntaje-o').html(puntaje_O);
+          localStorage.setItem('parcial_x', puntaje_X);
+          localStorage.setItem('parcial_o', puntaje_O);
+          
         }
-        $('.celda').html('');
-        $('.celda').removeClass('ganadora');
-        hay_ganador = false;
       }
+
       $('.reiniciar').on('click', function() {
+        sumar_puntajes();
         reiniciar();
       });
 
+      $('.clear').on('click', function() {
+        localStorage.clear();
+        location.reload();
+      });
+
+      var puntaje_X = parseInt(localStorage.getItem('parcial_x')) || 0;
+      var puntaje_O = parseInt(localStorage.getItem('parcial_o')) || 0;
+      
+      (function() {
+        // cuando inicie la pagina, cargo los puntajes que ya tenía antes
+        var parcial_x = localStorage.getItem('parcial_x') || 0;
+        var parcial_o = localStorage.getItem('parcial_o') || 0;
+        // los meto en el HTML
+        $('.puntaje-x').html(parcial_x);
+        $('.puntaje-o').html(parcial_o);
+
+      })();
+
+      
 
 
     </script>

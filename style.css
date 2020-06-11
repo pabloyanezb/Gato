@@ -85,3 +85,8 @@ tr {
     background-color: #5CDB95;
     border-color: #5CDB95;
 }
+.clear {
+    background-color: #053863;
+    margin: 5px;
+    width: 96%;
+}
