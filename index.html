@@ -14,7 +14,7 @@
       <div class="background">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="#">Juego del Gato</a>
-            <button class="btn btn-outline-success my-2 my-sm-0 offset-lg-10" type="submit">Iniciar</button>
+            <button class="reiniciar btn btn-outline-success my-2 my-sm-0 offset-lg-9" type="submit">Reiniciar</button>
           </nav>
           <div class="container">
               <div class="row">
@@ -64,9 +64,6 @@
                   </div>
                   <div class="col-3">
                     <div class="card">
-                        <div class="card-header">
-                          Puntajes Parciales:
-                        </div>
                         <div class="card-body tabla">
                           <table class="table table-striped table-hover">
                             <thead>
@@ -78,11 +75,11 @@
                             <tbody>
                               <tr>
                                 <th scope="row">X</th>
-                                <td>3</td>
+                                <td class="puntaje-x">0</td>
                               </tr>
                               <tr>
                                 <th scope="row">O</th>
-                                <td>2</td>
+                                <td class="puntaje-o">0</td>
                               </tr>
                             </tbody>
                           </table>
@@ -90,27 +87,14 @@
                       </div>
                   </div>
               </div>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Launch demo modal
-                </button>
                 
                 <!-- Modal -->
                 <div class="modal fade" id="modal-ganador" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ganaste!</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        </div>
                         <div class="modal-body">
-                          Felicidades al Jugador O por ganar.
-                        </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                          Felicidades al Jugador <span></span> por ganar.
+                          <button type="button" class="reiniciar btn btn-outline-success btn-block" data-dismiss="modal">Reiniciar</button>
                         </div>
                     </div>
                     </div>
@@ -127,11 +111,13 @@
     <script>
         // Acá va nuestro código
       var hay_ganador = false;
+      var puntaje_O = 0;
+      var puntaje_X = 0;
 
         function traer_valores() {
           var valores = [];
           // recorrer las celdas trayendome el valor de cada una
-          $('.celda').each(function(){
+          $('.celda').each(function() {
 
             var valor_celda = $(this).html();
             valores.push(valor_celda);
@@ -140,9 +126,22 @@
           return valores;
         }
         function ganar_O(num1, num2, num3) {
+          var valores = traer_valores();
+          if (valores[num1] == 'O' && valores[num2] == 'O' && valores[num3] == 'O'){
           $('#modal-ganador').modal('show');
           $(".celda:eq(" + num1 + "), .celda:eq(" + num2 + "), .celda:eq(" + num3 + ")").addClass('ganadora');
           hay_ganador = true;
+          $('.modal-body>span').html('O');
+          }
+        }
+        function ganar_X(num1, num2, num3) {
+          var valores = traer_valores();
+          if (valores[num1] == 'X' && valores[num2] == 'X' && valores[num3] == 'X'){
+          $('#modal-ganador').modal('show');
+          $(".celda:eq(" + num1 + "), .celda:eq(" + num2 + "), .celda:eq(" + num3 + ")").addClass('ganadora');
+          hay_ganador = true;
+          $('.modal-body>span').html('X');
+          }
         }
 
         $('.celda').on('click', function() {
@@ -168,39 +167,59 @@
           }
 
           // verificar si gana el jugador O
-          var valores = traer_valores();
-          // primera fila
-          if (valores[0] == 'O' && valores[1] == 'O' && valores[2] == 'O') {
-            ganar_O('0', '1', '2');
-            // $('.celda').html('');
-            // segunda fila
-          } else if (valores[3] == 'O' && valores[4] == 'O' && valores[5] == 'O') {
-            ganar_O('3', '4', '5');
-            // $('.celda').html('');
-            // tercera fila
-          } else if (valores[6] == 'O' && valores[7] == 'O' && valores[8] == 'O') {
-            ganar_O('6', '7', '8');
-            // $('.celda').html('');
-          } else if (valores[0] == 'O' && valores[3] == 'O' && valores[6] == 'O') {
-            ganar_O('0', '3', '6');
-            // $('.celda').html('');
-          } else if (valores[1] == 'O' && valores[4] == 'O' && valores[7] == 'O') {
-            ganar_O('1', '4', '7');
-            // $('.celda').html('');
-          } else if (valores[2] == 'O' && valores[5] == 'O' && valores[8] == 'O') {
-            ganar_O('2', '5', '8');
-            // $('.celda').html('');
-          } else if (valores[0] == 'O' && valores[4] == 'O' && valores[8] == 'O') {
-            ganar_O('0', '4', '8');
-            // $('.celda').html('');
-          } else if (valores[2] == 'O' && valores[4] == 'O' && valores[6] == 'O') {
-            ganar_O('2', '4', '6');
-            // $('.celda').html('');
-          }
 
-          // verificar si gano el jugador X
+          ganar_O('0', '1', '2'); // fila 1
+          ganar_O('3', '4', '5'); // fila 2
+          ganar_O('6', '7', '8'); // fila 3
+          ganar_O('0', '3', '6'); // columna 1
+          ganar_O('1', '4', '7'); // columna 2
+          ganar_O('2', '5', '8'); // columna 3
+          ganar_O('0', '4', '8'); // diagonal descendiente
+          ganar_O('2', '4', '6'); // diagonal ascendiente
 
+          // verificar si gana el jugador X
+
+          ganar_X('0', '1', '2'); // fila 1
+          ganar_X('3', '4', '5'); // fila 2
+          ganar_X('6', '7', '8'); // fila 3
+          ganar_X('0', '3', '6'); // columna 1
+          ganar_X('1', '4', '7'); // columna 2
+          ganar_X('2', '5', '8'); // columna 3
+          ganar_X('0', '4', '8'); // diagonal descendiente
+          ganar_X('2', '4', '6'); // diagonal ascendiente
         });
+      function reiniciar () {
+        var invalido = false;
+        var siguiente = $('.siguiente').html();
+        $('.celda').each(function() {
+          if ($(this).text().length == 0 && !hay_ganador){
+            invalido = true;
+          }
+        });
+        if (invalido){ // aun no se llega a emptate o victoria
+          return; // no es posible reiniciar
+        } else if (siguiente == 'O' && hay_ganador){ // gana X
+          puntaje_X += 10;
+          $('.puntaje-x').html(puntaje_X);
+        } else if (siguiente == 'X' && hay_ganador){ // gana O
+          puntaje_O += 10;
+          $('.puntaje-o').html(puntaje_O);
+        } else { // empate
+          puntaje_X += 5;
+          puntaje_O += 5;
+          $('.puntaje-x').html(puntaje_X);
+          $('.puntaje-o').html(puntaje_O);
+        }
+        $('.celda').html('');
+        $('.celda').removeClass('ganadora');
+        hay_ganador = false;
+      }
+      $('.reiniciar').on('click', function() {
+        reiniciar();
+      });
+
+
+
     </script>
   </body>
 </html>

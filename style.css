@@ -1,6 +1,7 @@
 .background {
     background: linear-gradient(-45deg, #053863, #379683, #5CDB95);
     height: 668px;
+    overflow-y: hidden;
 }
 nav {
     background-color: #053863;
@@ -56,10 +57,18 @@ nav {
 tr {
     text-align: center;
 }
-.modal-header {
-    background-color: #5CDB95;
+.modal-body {
+    border-radius: 2px;
+    padding: 20px;
+    font-weight: bolder;
+    text-align: center;
+    background: linear-gradient(-45deg, #053863, #379683, #5CDB95);
+    color: #EDF5E1;
 }
-/* Estilo botón de iniciar (btn-outline-success) */
+.modal-body>.btn {
+    margin-top: 1rem;
+}
+/* Estilo botón de reiniciar (btn-outline-success) */
 .btn-outline-success:not(:disabled):not(.disabled).active:focus, .btn-outline-success:not(:disabled):not(.disabled):active:focus, .show>.btn-outline-success.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgba(92, 219, 149, 0.246);
 }
